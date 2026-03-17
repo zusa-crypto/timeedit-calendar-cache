@@ -15,8 +15,9 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
+          python-version: "3.12"
 
+      - run: pip install --upgrade pip
       - run: pip install -r requirements.txt
       - run: python update_calendar.py
 
