@@ -1,0 +1,28 @@
+name: update calendar
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - run: pip install -r requirements.txt
+      - run: python update_calendar.py
+
+      - name: commit
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
+          git add calendar.ics
+          git commit -m "update calendar" || exit 0
+          git push
